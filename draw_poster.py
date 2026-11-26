@@ -88,45 +88,42 @@ def circle(cx, cy, r, fill, outline=None, thick=1):
     d.ellipse((cx-r, cy-r, cx+r, cy+r), fill=fill, outline=outline, width=thick)
 
 
-def courtroom():
-    # A compact courtroom vignette: bench, judge, jury rail and the evidence seal.
-    d.rounded_rectangle((655, 119, 990, 281), 8, fill="#e8e1d4", outline="#d5cbbb", width=1)
-    d.rectangle((672, 237, 974, 250), fill=NAVY)
-    d.rectangle((687, 250, 699, 270), fill="#8c7355")
-    d.rectangle((948, 250, 960, 270), fill="#8c7355")
-    d.rectangle((704, 225, 941, 237), fill="#b39164")
-    # Bench front inset and small gold seal.
-    d.rectangle((718, 241, 926, 250), fill="#263b53")
-    circle(822, 247, 4, GOLD)
-    # Judge silhouette above the bench.
-    d.polygon([(784, 188), (791, 168), (805, 159), (839, 159), (853, 168), (860, 188)], fill=NAVY)
-    d.ellipse((802, 137, 842, 175), fill="#d7b894")
-    d.polygon([(798, 143), (804, 128), (842, 128), (849, 146), (836, 138), (813, 140)], fill="#313b47")
-    d.polygon([(810, 174), (834, 174), (845, 211), (800, 211)], fill="#f4f0e6")
-    d.polygon([(816, 176), (828, 176), (822, 193)], fill=RED)
-    # Two jury silhouettes keep the scene grounded without adding visual noise.
-    for xx in (688, 716, 922, 950):
-        circle(xx, 191, 9, "#b68f69")
-        d.rounded_rectangle((xx-11, 201, xx+11, 229), 4, fill="#40566a")
-    # Gavel and document marked as evidence.
-    d.rounded_rectangle((861, 194, 903, 201), 3, fill="#76553a")
-    d.rounded_rectangle((871, 185, 893, 196), 3, fill="#76553a")
-    d.rectangle((742, 210, 772, 228), fill="#fffdf8", outline="#b9ad9a")
-    text(747, 213, "EXHIBIT", 5, MUTED, True)
+def rocket():
+    # A compact launch vignette: Shenzhou-24 lifts off toward the station.
+    d.rounded_rectangle((655, 119, 990, 281), 8, fill="#1d3350", outline="#d5cbbb", width=1)
+    # Stars and the station silhouette the capsule is heading for.
+    for sx, sy in ((684, 140), (716, 158), (905, 138), (940, 162), (872, 132), (700, 186), (958, 190)):
+        circle(sx, sy, 1.6, "#e8dfc8")
+    d.rectangle((896, 146, 952, 152), fill=GOLD)
+    d.rectangle((918, 138, 930, 160), fill="#e8dfc8")
+    d.rectangle((884, 147, 896, 151), fill="#9db4cc")
+    d.rectangle((952, 147, 964, 151), fill="#9db4cc")
+    # Rocket body, capsule nose and fins.
+    d.polygon([(806, 238), (812, 176), (822, 150), (832, 176), (838, 238)], fill="#f4f0e6")
+    d.polygon([(812, 176), (822, 150), (832, 176)], fill=RED)
+    d.rectangle((813, 196, 831, 204), fill=NAVY)
+    d.polygon([(806, 238), (792, 256), (806, 252)], fill=RED)
+    d.polygon([(838, 238), (852, 256), (838, 252)], fill=RED)
+    # Exhaust flame and launch-pad smoke.
+    d.polygon([(812, 238), (822, 268), (832, 238)], fill=GOLD)
+    d.polygon([(817, 238), (822, 258), (827, 238)], fill="#fff0b6")
+    for cx, cy, r in ((776, 262, 13), (806, 268, 16), (842, 268, 16), (868, 262, 12)):
+        circle(cx, cy, r, "#d9d1c4")
+    d.rectangle((672, 262, 974, 270), fill="#132943")
+    text(822, 128, "00:18 UTC", 7, "#efe3cc", True, anchor="ma")
 
 
-def tower_icon(box):
+def chart_icon(box):
     x, y, w, h = box
-    d.rectangle((x, y+h-10, x+w, y+h), fill="#d9d1c4")
-    pts = [(x+w*.42,y+h-10),(x+w*.45,y+13),(x+w*.39,y+8),(x+w*.47,y+4),
-           (x+w*.49,y),(x+w*.53,y+8),(x+w*.58,y+11),(x+w*.56,y+h-10)]
-    d.polygon(pts, fill=NAVY)
-    for yy in range(int(y+22), int(y+h-15), 9):
-        line(int(x+w*.46), yy, int(x+w*.55), yy, "#d6c7ac", 2)
-    # Drone with twin rotors and a red strike marker.
-    line(x+8,y+17,x+33,y+17,RED,2); line(x+20,y+17,x+20,y+25,RED,2)
-    line(x+4,y+13,x+12,y+13,RED,2); line(x+29,y+13,x+37,y+13,RED,2)
-    circle(x+20,y+17,3,RED)
+    d.rectangle((x, y, x+w, y+h), fill="#e9e2d4")
+    line(x+4, y+4, x+4, y+h-5, NAVY, 1)
+    line(x+4, y+h-5, x+w-3, y+h-5, NAVY, 1)
+    # A falling index line for the Asian AI selloff.
+    pts = [(x+5, y+8), (x+13, y+12), (x+19, y+10), (x+26, y+22), (x+31, y+30), (x+w-4, y+38)]
+    d.line(pts, fill=RED, width=2)
+    for px, py in pts:
+        circle(px, py, 1.8, RED)
+    d.polygon([(x+w-4, y+38), (x+w-10, y+36), (x+w-6, y+31)], fill=RED)
 
 
 def ship_icon(box):
@@ -137,22 +134,19 @@ def ship_icon(box):
     d.polygon([(x+5,y+int(h*.58)),(x+w-7,y+int(h*.58)),(x+w-18,y+int(h*.79)),(x+20,y+int(h*.79))],fill=NAVY)
     d.rectangle((x+22,y+int(h*.43),x+62,y+int(h*.58)),fill="#d9d1c4",outline=NAVY)
     d.rectangle((x+35,y+int(h*.33),x+48,y+int(h*.43)),fill=NAVY)
-    line(x+42,y+int(h*.19),x+42,y+int(h*.35),RED,2)
-    line(x+43,y+int(h*.2),x+66,y+int(h*.25),RED,2)
+    line(x+24,y+int(h*.19),x+24,y+int(h*.35),RED,2)
+    line(x+25,y+int(h*.2),x+34,y+int(h*.25),RED,2)
     circle(x+w-20,y+15,5,GOLD)
 
 
-def medal_icon(box):
+def shield_icon(box):
     x,y,w,h=box
-    # Two officials and a ribbon medal against a simple ceremony backdrop.
+    # A phone guarded by a shield: Australia's new online-safety duty.
     d.rectangle((x,y,x+w,y+h),fill="#e9e2d4")
-    d.rectangle((x+5,y+h-11,x+w-5,y+h-7),fill="#bd9b69")
-    for xx, color in ((x+18,"#435768"),(x+45,"#26394e"),(x+76,"#435768")):
-        circle(xx,y+24,8,"#c99f7a")
-        d.rounded_rectangle((xx-9,y+32,xx+9,y+h-12),4,fill=color)
-    d.polygon([(x+51,y+7),(x+58,y+22),(x+65,y+7)],fill=RED)
-    circle(x+58,y+26,7,GOLD,outline="#9e762f",thick=1)
-    circle(x+58,y+26,3,"#fff0b6")
+    d.rounded_rectangle((x+10,y+4,x+28,y+h-4),3,fill=NAVY)
+    d.rectangle((x+13,y+9,x+25,y+h-10),fill="#f4f0e6")
+    d.polygon([(x+19,y+14),(x+24,y+16),(x+24,y+22),(x+19,y+26),(x+14,y+22),(x+14,y+16)],fill="#55725a")
+    d.line([(x+16.5,y+20),(x+18.5,y+22),(x+22,y+17.5)],fill="white",width=1)
 
 
 def mini_symbol(x, y, kind):
@@ -193,24 +187,24 @@ d.rectangle((0,86,W,91),fill=RED)
 text(27,13,"THE WORLD TODAY",36,"#fffaf0",True)
 text(29,55,"WEDNESDAY 25 NOVEMBER 2026",18,"#efe3cc",True)
 text(996,17,"WORLD\nEDITION",8,"#d4c5a9",True,anchor="ra")
-text(995,66,"50 STORIES · 7 REGIONS · 18 FIELDS",8,"#fffaf0",True,anchor="ra")
+text(995,66,"50 STORIES · 7 REGIONS · 22 FIELDS",8,"#fffaf0",True,anchor="ra")
 
-# Dominant front-page lead and original courtroom illustration.
+# Dominant front-page lead and original launch illustration.
 section_label(28,102,"THE LEAD",RED,8)
-text(28,115,"HUAWEI GUILTY",31,NAVY,True)
-text(28,149,"ON 10 COUNTS",31,NAVY,True)
-paragraph(29,190,"A Brooklyn jury convicts the Chinese tech giant of bank and wire fraud, sanctions violations and conspiring to steal trade secrets; acquitted on racketeering and obstruction. [Reuters]",11,585,INK,False,2,5)
-courtroom()
-text(664,269,"BROOKLYN FEDERAL COURT · VERDICT",7,MUTED,True)
+text(28,115,"SHENZHOU-24",31,NAVY,True)
+text(28,149,"DOCKS IN ORBIT",31,NAVY,True)
+paragraph(29,190,"China launches Shenzhou-24 at 00:18 UTC; the capsule docks with the space station at 03:56 UTC carrying Tang Hongbo, Wu Yi and Muhammad Zeeshan Ali. [AP / Reuters]",11,585,INK,False,2,5)
+rocket()
+text(664,284,"SHENZHOU-24 · LAUNCH 00:18 UTC · DOCKING 03:56 UTC",7,MUTED,True)
 
 # Three concise illustrated follow-up leads.
 lead_cards = [
-    ("SECOND LEAD","HOUTHIS HIT RIYADH'S TALLEST TOWER — 11 HURT",
-     "Second strike in less than a week; at least 11 wounded. UAE condemns it. [Reuters / Al Jazeera]","tower"),
-    ("THIRD LEAD","ZELENSKYY: WE SANK RUSSIAN WARSHIP OFF LIBYA",
-     "Ukraine says two vessels struck near Benghazi; corvette Merkury sunk in Kyiv's farthest sea strike. Zelenskyy also confirms a cargo-ship drone strike in the Gulf of Finland; Norway urges caution. [Reuters / RFE/RL]","ship"),
-    ("FOURTH LEAD","TRUMP GIVES GIULIANI MEDAL OF FREEDOM",
-     "Closed-press Oval Office honour; Giuliani was pardoned over election-overturn efforts. [Reuters]","medal"),
+    ("SECOND LEAD","IRAN: READY TO WITHSTAND US BLOCKADE",
+     "Vice-president Aref said Wednesday Tehran is unconcerned by the naval blockade as cargo shifts to other borders; October inflation hit 88.7%. [Reuters]","ship"),
+    ("THIRD LEAD","ASIAN STOCKS TUMBLE IN AI SELLOFF",
+     "Taiex fell over 6% Wednesday, TSMC −8.1%, Kospi −5.6%, Nikkei −3.6% and SoftBank −16.1% as AI shares slid. [AP]","chart"),
+    ("FOURTH LEAD","AUSTRALIA PASSES ONLINE-SAFETY DUTY",
+     "The Digital Duty of Care passed both Houses Wednesday; penalties reach 5% of global turnover or A$109.2m. [AP]","shield"),
 ]
 card_x = [28, 359, 690]
 for i,(label,headline,deck,kind) in enumerate(lead_cards):
@@ -219,66 +213,66 @@ for i,(label,headline,deck,kind) in enumerate(lead_cards):
     section_label(x,305,label,RED,7)
     title, title_size = fitted(headline,10,304,True,7)
     text(x,319,title,title_size,NAVY,True)
-    if kind == "tower": tower_icon((x+1,333,37,50))
+    if kind == "chart": chart_icon((x+1,333,37,50))
     elif kind == "ship": ship_icon((x+1,333,38,50))
-    else: medal_icon((x+1,333,38,50))
+    else: shield_icon((x+1,333,38,50))
     paragraph(x+43,338,deck,8,258,INK,False,1,5)
 
-# The regional conflict explainer, visually set apart as the only red band.
+# The day's big picture, visually set apart as the only red band.
 d.rounded_rectangle((27,387,997,431),5,fill="#eee2d0",outline="#d7c8b1")
 d.rectangle((27,387,33,431),fill=RED)
-section_label(43,394,"WHY THE GULF IS BURNING",RED,9)
-paragraph(211,394,"Ninth month of US–Iran war: US naval blockade, tanker attacks in Hormuz, Houthi strikes on Riyadh and US bases; Brent crude below $90. [Reuters / wire]",9,769,INK,False,1,3)
+section_label(43,394,"THE DAY IN ONE LINE",RED,9)
+paragraph(211,394,"Wednesday mixed a space docking and an AI market rout with Hormuz tanker blasts, fresh US tariffs and data, and wars from Ukraine to Gaza and Sudan — every story below is dated 25 November. [wire]",9,769,INK,False,1,3)
 
 # All forty-six briefs stay in the edition. The deck is a short, measured
 # caption for each; source tags sit on each headline line.
 stories = [
- ("RUSSIA FIRES 96 DRONES OVERNIGHT","Air defences down 73, including 45 jet-powered Shaheds; 13 sites hit.","Ukraine Air Force / Kyiv24","air"),
- ("SENATE PROBES VANCE OVER VENEZUELA OIL DEAL","Maggie Hassan seeks records on alleged help for Vitol; sales up to 100m barrels.","wire","law"),
- ("CIA AND ODNI HIT BY CYBER BREACH","Breach involves some unclassified information, a source says.","Reuters","shield"),
- ("FORT HOOD SHOOTER SEEKS STAY","Nidal Hasan seeks a stay of his scheduled execution.","Reuters","law"),
- ("SARKOZY CORRUPTION CASE TO TRIAL","Former French president and Carla Bruni face trial.","Reuters","law"),
- ("HOUTHIS WON'T TAKE ADEN","Yemeni forces say Houthis are 60 km away but will not capture the city.","Reuters","shield"),
- ("NATO EYES EARLY-WARNING JETS FOR POLAND","Deployment planned after missiles landed during an attack on Ukraine.","wire","air"),
- ("DOW TOPS 50,000 AS NVIDIA SLIDES","Nvidia -6% after a 30% rally on Huang's return; Nasdaq -1.5%, S&P -0.5%.","wire","money"),
- ("DELL LIFTS FORECASTS","Record quarter powered by surging AI server demand.","wire","money"),
- ("INDIA MARKETS REOPEN","NSE and BSE return after holiday; GIFT Nifty points about 100 higher.","Kalkine","money"),
- ("700,000 RUSSIAN SOLDIERS KILLED","Analysis puts Russian dead past 700,000 in the war on Ukraine.","RFE/RL","people"),
- ("IRAN BRACES FOR WINTER GAS SHORTAGES","War damage deepens the energy crisis as cold nears.","RFE/RL","energy"),
- ("US ENVOY 'NOT CERTAIN' ISRAEL AID ENDS","Trump promised an end; the US–Israel aid memorandum continues.","Reuters","world"),
- ("TRUMP TO UNVEIL NEW TARIFFS","Sources cite a probe into excess factory capacity.","Reuters","money"),
- ("RADAR ISSUE DELAYS O'HARE FLIGHTS","FAA reports a radar problem at Chicago O'Hare.","Reuters / FAA","air"),
- ("US TREASURY SANCTIONS IRAN SHADOW BANKING","Two dozen-plus exchanges and fronts hit after FinCEN flags $14.7bn.","US Treasury","money"),
- ("ZELENSKYY ACCEPTS PRE-CHRISTMAS TALKS","Kyiv accepts US trilateral proposal; Miami floated, no invite yet.","wire","world"),
- ("GRYNSPAN TOPS UN STRAW POLL","Rebeca Grynspan wins 10 of 15 votes; two vetoes block her.","wire","world"),
- ("UK–EU AGREE BREXIT RESET DEAL","Package includes 100,000 youth visas and food trade.","wire","world"),
- ("SENATE PASSES PERMITTING BILL 62–33","US energy-project permitting reform clears the Senate.","wire","law"),
- ("IOWA LEAD AZIDE BLAST TODAY","Army plans to detonate 68 unstable barrels; residents told to leave.","wire","shield"),
- ("ESTONIA CLOSES RUSSIA BORDER CROSSINGS","Closures begin 1 Dec after a sabotage bid.","wire","shield"),
- ("EU REJECTS RUSSIA'S SECURITY DEMANDS","Ministers back ceasefire first and approve nearly €8bn in Ukraine aid.","wire","world"),
- ("DENMARK COURT UPHOLDS 'GHETTO' EVICTIONS","Supreme Court dismisses ethnic-discrimination concerns over housing law.","wire","law"),
- ("REEF HIDES 12 'LOST' CORALS","Genetic analysis revives 12 Acropora species on the Great Barrier Reef.","wire","science"),
- ("UN: WOMAN KILLED BY FAMILY EVERY 12 MINUTES","Five women an hour were killed by relatives, UN finds.","UN","people"),
- ("BJP AND SAD ANNOUNCE PUNJAB ALLIANCE","The parties reunite for state polls, six years after splitting.","wire","world"),
- ("US AND QATAR TALK STRATEGIC COOPERATION","Officials discuss regional developments and bilateral ties.","wire","world"),
- ("UN RAISES GAZA CONCERNS","Civilians face continuing humanitarian difficulties seeking aid.","UN","people"),
- ("CHAMPIONS LEAGUE TONIGHT: 9 TIES","PSG–Roma, Liverpool at Brugge, Sporting–Man Utd; Barça at Sabah.","UEFA","sport"),
- ("AUSTRALIA INFLATION DATA DUE TODAY","CPI and RBA trimmed mean due; Japan sells 40-year bonds.","wire","money"),
- ("RUSSIAN JETS NEAR S. KOREAN ISLAND","Seoul issues an alert after Russian military flights.","wire","air"),
- ("MI5 WARNS FIRMS BACKING UKRAINE","UK companies told to act against Russian sabotage.","wire","shield"),
- ("UK ACTS AGAINST HOUTHI COMMANDERS","Sanctions imposed over abuse accusations in Yemen.","wire","law"),
- ("MOSCOW TO BUILD KALININGRAD RAIL FERRY","Plan follows a logistics 'blockade'.","wire","rail"),
- ("IRAN REPORTS TANKER EXPLOSIONS","Revolutionary Guard Navy says naval mines hit three Hormuz tankers.","wire","energy"),
- ("RUSSIA AND UKRAINE TRADE ACCUSATIONS AT UN","Dispute concerns attacks on Black Sea shipping and energy sites.","UN","world"),
- ("ENGLAND BEAT AUSTRALIA IN 2ND T20I","Eight-wicket chase of 185 levels the five-match series.","wire","sport"),
- ("RFE/RL BACK ON SHORTWAVE FOR AFGHAN GIRLS","Educational radio for girls excluded from school by Taliban.","RFE/RL","people"),
- ("NORWAY URGES KYIV CAUTION","Oslo urges restraint after the Gulf of Finland ship strike.","Reuters","world"),
- ("MAN UTD FUME OVER YORO RED CARD","Pochettino leads fury at the ruling.","wire","sport"),
- ("VENEZUELA REPORTS $237.5BN PUBLIC DEBT","Official total is published.","wire","money"),
- ("DUTCH TRAIN FARES FROZEN","Prices unchanged until the end of next May, says state secretary.","wire","rail"),
- ("UK ASKS PUBLIC ON AGE OF CONSENT","Ministers consult on a possible change.","BBC","people"),
- ("NUCLEAR TEST VETERANS GET PANEL","PM Burnham confirms independent review of Cold War atomic health legacy.","BBC","science"),
- ("SENEDD REJECTS BID TO OUST PRESIDING OFFICER","Reform motion to remove Huw Irranca Davies fails.","wire","law"),
+ ("INDIA MARKETS RALLY","ASIA · Sensex +1,502 to 83,938; Nifty +470.","wire","money"),
+ ("BANGLADESH RAISES GARMENT WAGE 36%","ASIA · To 17,000 taka from 1 Dec; vote 4–2.","wire","people"),
+ ("AUSTRALIA CPI AT 4.9%","OCEANIA · October CPI 4.9% y/y; trimmed mean 3.8%.","ABS","money"),
+ ("JAXA UNVEILS MOON ROVER MODEL","ASIA · Test rover to hunt water at lunar south pole.","BBC","science"),
+ ("ISHIKAWA ANNOUNCES MARRIAGE","ASIA · Table-tennis star announced it Wednesday.","JIJI","people"),
+ ("PROSECUTORS SEEK DEATH PENALTY","ASIA · Chiba double-murder arson trial, Wednesday.","JIJI","law"),
+ ("SOLOMON–AUSTRALIA TREATY SIGNED","OCEANIA · Bars foreign military base in Solomons.","wire","world"),
+ ("EUROSTAR STRIKE DISRUPTS TRAINS","EUROPE · Strike hit services on 25 November.","AP","rail"),
+ ("CHAMPIONS LEAGUE: WEDNESDAY RESULTS","EUROPE · Barça 4–1, Liverpool 3–0, Bayern beaten.","UEFA","sport"),
+ ("MERZ ACCUSES RUSSIA IN BUNDESTAG","EUROPE · Defends defence spending and Ukraine aid.","wire","world"),
+ ("RUSSIA FIRES 112 DRONES OVERNIGHT","EUROPE · 88 downed or suppressed by 08:00 Wed.","Ukraine AF","air"),
+ ("UKRAINE HITS REFINERIES, AIRBASE","EUROPE · 3 MiG-31 and 2 Su-34 damaged overnight.","wire","air"),
+ ("GERMAN GDP GROWS JUST 0.1%","EUROPE · Q3 revised down from 0.2%, Destatis Wed.","Destatis","money"),
+ ("ESA RELEASES HERA ASTEROID IMAGES","SPACE · Stadium-size crater on Dimorphos shown Wed.","ESA/CNN","science"),
+ ("UK TO LICENCE KNIFE SELLERS","EUROPE · Home Office announced scheme Wednesday.","Home Office","law"),
+ ("OFGEM: BILLS TO RISE 26%","EUROPE · Cap £2,166 from January, announced Wed.","Ofgem","energy"),
+ ("POUNDLAND ENTERS ADMINISTRATION","EUROPE · 11,000 jobs at risk; administrators Wed.","AlixPartners","money"),
+ ("UKRAINE SAYS LASER DOWNED JET DRONE","EUROPE · Adviser Wed called Blysk hit a world first.","wire","shield"),
+ ("BBC: 490,334 RUSSIAN DEATHS","EUROPE · Leak analysis published Wednesday.","BBC","people"),
+ ("NEW INHIBITOR REVIVES ANTIBIOTIC","SCIENCE · IMP-2380 restores ciprofloxacin vs MRSA.","Nat Chem Biol","science"),
+ ("GHB TRACE FOUND UP TO 48 HOURS","SCIENCE · Marker study published Wednesday.","Sci Adv","science"),
+ ("UN WARNS OF ATROCITY RISK IN GAZA","MIDEAST · Türk warned Wednesday; ~2m displaced.","UN News","people"),
+ ("IRAN: TWO TANKERS HIT MINES","MIDEAST · IRGC: blasts early Wednesday in Hormuz.","IRGC","energy"),
+ ("HOUTHIS CLAIM RAS TANURA STRIKE","MIDEAST · Claim Wed; refinery hit unconfirmed.","Just Security","shield"),
+ ("ISRAEL KILLS ABUELOUF FAMILY","MIDEAST · Mohammad Abuelouf, wife, 2 children Wed.","wire","people"),
+ ("JUDGES URGE DROPPING NETANYAHU CASE","MIDEAST · Drop Case 4000 bribery, judges Wed.","wire","law"),
+ ("LIBYA'S LNA VOWS RETALIATION","AFRICA · Vow Wednesday after two officers' deaths.","wire","shield"),
+ ("19 KILLED IN SUDAN RSF STRIKES","AFRICA · Emergency Lawyers reported Wednesday.","E. Lawyers","people"),
+ ("EGYPT TANKER FIRE KILLS 21","AFRICA · Vehicle blaze on ring road Wednesday.","Reuters","energy"),
+ ("UN: 10 EBOLA WORKERS EVACUATED","AFRICA · Mission said Wednesday; Ituri fighting.","Reuters","people"),
+ ("NIGERIA ANNOUNCES METH SEIZURE","AFRICA · 1,512 kg announced Wed; raid was 11 Nov.","NDLEA","shield"),
+ ("CAF NAMES PLAYER OF YEAR FINALISTS","AFRICA · Five-man shortlist announced Wednesday.","CAF","sport"),
+ ("MACKENZIE CONVICTED ON NEW COUNTS","AFRICA · Child-cruelty counts, convicted Wednesday.","wire","law"),
+ ("CAR MEDIA HOLD DAY WITHOUT NEWS","AFRICA · Outlets silent Wednesday over pressure.","wire","world"),
+ ("US PROPOSES TARIFFS ON 14 PARTNERS","AMERICAS · Excess-capacity tariffs proposed Wed.","Reuters","money"),
+ ("IOWA DETONATES 68 LEAD AZIDE DRUMS","AMERICAS · Blast completed Wed; readings near zero.","wire","shield"),
+ ("COURT ORDERS RESPONSE IN HASAN CASE","AMERICAS · Order Wed: reply by noon CT Friday.","court","law"),
+ ("US GDP REVISED UP TO 4.3%","AMERICAS · PCE 3.8%, core 3.3%, claims 189K Wed.","Commerce","money"),
+ ("WALL STREET ENDS MIXED WEDNESDAY","AMERICAS · Dow +0.33%; S&P −0.25%, Nasdaq −0.62%.","wire","money"),
+ ("MACY'S PARADE POSTPONED TO SATURDAY","AMERICAS · 100th parade moved, announced Wed.","wire","people"),
+ ("DIVERS FIND 6 IN PLANE WRECK","AMERICAS · Search ended early Wed; victims named.","wire","people"),
+ ("JUDGE BLOCKS BIRTHRIGHT ORDER","AMERICAS · Injunction issued Wednesday.","wire","law"),
+ ("BEIGE BOOK: GROWTH, STICKY PRICES","AMERICAS · 8 of 12 districts grew; released Wed.","Fed","money"),
+ ("FCC CLEARS SPACEX DATA-CENTRE SATS","AMERICAS · Up to 1m Starmind satellites Wed.","Reuters","science"),
+ ("ECUADOR: TALKS REVIEW US OPERATIONS","LATAM · Minister spoke Wednesday after US pause.","Reuters","world"),
+ ("POPE LAMENTS COP31 FAILURE","GLOBAL · Leo XIV voiced concern Wednesday.","wire","world"),
 ]
 assert len(stories) == 46, f"grid story count is {len(stories)}"
 
@@ -314,13 +308,13 @@ assert cursor == 46
 line(28,798,996,798,NAVY,1)
 section_label(28,802,"HOW WEDNESDAY UNFOLDED — UTC",NAVY,8)
 timeline = [
- ("00:00","96 drones over Ukraine; 73 downed"),
- ("01:00","Kyiv confirms warship sunk off Libya"),
- ("02:00","Asia wakes to Huawei verdict, Giuliani medal"),
- ("08:00","India markets reopen; Riyadh strike confirmed"),
- ("15:00","Iowa: Army blast planned, 9am local"),
- ("17:45","Champions League opens; Sabah–Barcelona"),
- ("20:00","PSG–Roma; Liverpool, Sporting–Man Utd"),
+ ("00:18","Shenzhou-24 launches"),
+ ("03:56","Capsule docks with station"),
+ ("07:00","German GDP revised to 0.1%"),
+ ("13:30","US GDP and PCE data land"),
+ ("15:00","Iowa lead azide detonation"),
+ ("17:55","FCC clears SpaceX Starmind"),
+ ("19:35","Fed Beige Book released"),
 ]
 for i,(when,what) in enumerate(timeline):
     x=28+i*138
@@ -360,19 +354,20 @@ for px,py,num in pins:
 d.rounded_rectangle((398,859,996,999),4,fill="#ebe6dc",outline="#cfc8bb")
 section_label(411,866,"DATE CHECK — LEFT OUT AS OLDER NEWS",RED,8)
 older = [
- "ABU DHABI TALKS END WITH NO DEAL — 24 Nov",
- "NETANYAHU URGES TRUMP TO HIT IRAN AGAIN — 24 Nov",
- "RUSSIAN STRIKE HITS ZAPORIZHZHIA, 2 KILLED — 24 Nov",
- "GUKESH–SINDAROV TITLE MATCH OPENS — 24 Nov",
- "TRUMP PARDONS TURKEYS FREEDOM & FEATHERS — 24 Nov",
- "CHAMPIONS LEAGUE TUESDAY RESULTS (REAL 5–1 PSV) — 24 Nov",
- "ALCARAZ WINS ATP FINALS — 22 Nov",
- "COP31 COLLAPSES IN ANTALYA — 22 Nov",
- "KYIV GRID BARRAGE — 23 Nov",
- "IRAN VOWS ‘EVERY MEANS’ — 23 Nov",
- "NVIDIA +30% ON HUANG'S RETURN — 23 Nov",
- "EU PROPOSES 22ND SANCTIONS PACKAGE — 23 Nov",
- "NEPAL PM'S INDIA VISIT — 22–23 Nov",
+ "HUAWEI GUILTY VERDICT — 24 Nov",
+ "HOUTHIS HIT RIYADH TOWER — 24 Nov",
+ "GIULIANI MEDAL OF FREEDOM — 24 Nov",
+ "RUSSIA 96 DRONES / 73 DOWNED — 23–24 Nov",
+ "WARSHIP SUNK OFF LIBYA — 22–23 Nov",
+ "NUCLEAR PANEL ANNOUNCED — 24 Nov",
+ "DOW 50,000 TUESDAY CLOSE — 24 Nov",
+ "700,000 RUSSIAN DEAD ESTIMATE — 23 Nov",
+ "SARKOZY TRIAL ORDER — 24 Nov",
+ "NATO AWACS POLAND DECISION — 23 Nov",
+ "QUASAR DISCOVERY ANNOUNCED — 24 Nov",
+ "SHURI CASTLE REOPENED — 23 Nov",
+ "SINNER KNEE SURGERY — 24 Nov",
+ "LAKERS BEAT JAZZ — 23 Nov",
 ]
 for i,item in enumerate(older):
     col=i//7
@@ -384,7 +379,7 @@ for i,item in enumerate(older):
 
 # Bottom ribbon repeats the four edition leads and the oil-market line.
 d.rectangle((0,1005,W,H),fill=NAVY)
-footer="HUAWEI GUILTY  ·  HOUTHIS HIT RIYADH TOWER  ·  ZELENSKYY CONFIRMS LIBYA SINKING  ·  GIULIANI HONOURED  ·  BRENT BELOW $90"
+footer="SHENZHOU-24 DOCKS  ·  IRAN DEFIES BLOCKADE  ·  ASIAN STOCKS SLIDE  ·  AUSTRALIA ONLINE-SAFETY LAW  ·  EVERY STORY DATED 25 NOV"
 footer,size=fitted(footer,8,976,True,6)
 text(24,1011,footer,size,"#fffaf0",True)
 

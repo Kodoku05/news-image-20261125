@@ -6,8 +6,11 @@
 
 The World Today — Wednesday 25 November 2026: a deterministic newspaper
 poster covering the verified world news of the day in one 1024×1024 PNG.
-The page has four illustrated lead stories, the Gulf explainer, 46 short
-briefs, a UTC timeline, a location map, and a dated older-news check box.
+The page leads with Shenzhou-24's launch and docking, Iran's blockade
+stance, Asia's AI stock selloff and Australia's online-safety law, then
+46 short briefs grouped by region, a UTC timeline, a location map, and a
+DATE CHECK box listing older stories left out with their real dates.
+Every story on the page is sourced to reporting dated 25 November 2026.
 
 `draw_poster.py` uses Pillow to draw the original flat-vector artwork. The
 Node 22 entrypoint copies the committed `entry.png` to `$MAKEFUN_OUTPUT_DIR`
